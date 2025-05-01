@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Project 2 Report</title>
+    <style>
+      :root {
+        --color-neutral-95: hsl(220 10% 95%);
+        --color-neutral-90: hsl(220 10% 90%);
+        --color-neutral-80: hsl(220 10% 80%);
+        --color-neutral-70: hsl(220 10% 70%);
+        --color-neutral-60: hsl(220 10% 60%);
+        --color-neutral-50: hsl(220 10% 50%);
+        --color-neutral-40: hsl(220 10% 40%);
+        --color-neutral-30: hsl(220 10% 30%);
+        --color-neutral-20: hsl(220 10% 20%);
+        --color-neutral-10: hsl(220 10% 10%);
+      }
+
+      html {
+        font: 100%/1.5 system-ui;
+        counter-reset: figure;
+        background: var(--color-neutral-95);
+        max-width: min(75vw, 80em);
+        margin: 0 auto;
+      }
+
+      /* Headings */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        line-height: 1.1;
+        font-weight: 600;
+        text-wrap: balance;
+      }
+
+      h1,
+      h2 {
+        border-bottom: 1px solid var(--color-neutral-80);
+        padding-bottom: 0.2em;
+      }
+
+      h1 {
+        margin-block: 1em 0.5rem;
+        font-size: clamp(2.5em, 150% + 2vh + 2vw, 10vmin);
+        font-weight: 800;
+
+        small {
+          display: block;
+          width: fit-content;
+          padding: 0.2em 0.5em;
+          margin-inline: auto;
+          color: white;
+          background: var(--color-neutral-40);
+          font-size: 40%;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+      }
+
+      h2 {
+        font-size: 180%;
+        color: var(--color-neutral-30);
+      }
+
+      h3 {
+        font-size: 130%;
+      }
+
+      /* Lists */
+
+      ul,
+      ol {
+        padding-inline-start: 2em;
+      }
+
+      li {
+        &::marker {
+          color: var(--color-neutral-40);
+        }
+
+        + li {
+          margin-top: 0.2em;
+        }
+      }
+
+      /* Sectioning elements */
+
+      header {
+        padding-block: 1em;
+        text-align: center;
+      }
+
+      main {
+        background: white;
+        color: var(--color-neutral-20);
+        border-radius: 1rem;
+        padding: 0.1rem 2rem;
+      }
+
+      /* Figures */
+
+      figure {
+        margin: 1em 0;
+        padding: 0.5rem;
+        margin-inline: -0.5em;
+        border: 1px solid var(--color-neutral-80);
+        box-shadow: 0 0.1em 0.2em var(--color-neutral-95);
+        text-align: center;
+        background: white;
+
+        > figcaption {
+          font: 500 75% var(--font-sans);
+          background: var(--color-neutral-95);
+          padding: 0.5rem;
+          margin: -0.5rem;
+          margin-top: 0.5rem;
+          counter-increment: figure;
+          text-align: left;
+
+          &::before {
+            content: 'Figure ' counter(figure) ': ';
+            font-weight: bold;
+            color: var(--color-neutral-40);
+          }
+
+          a:not(:hover, :focus, :active) {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-color: color-mix(
+              in lab,
+              currentColor,
+              transparent 70%
+            );
+          }
+        }
+      }
+
+      /* Responsive image styling */
+      figure img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>
+        <small>Assignment 4</small>
+        Persuasive or Deceptive Visualization?
+      </h1>
+
+      <p><strong>Tejas Mani</strong> — <em>tmani@ucsd.edu</em></p>
+    </header>
+
+    <main>
+      <h2>Proposition: Environmental investment has a significant effect on reducing greenhouse gas emissions.</h2>
+
+      <section>
+        <h3>FOR the Proposition</h3>
+
+        <figure>
+          <img src="for.png" alt="" />
+          <figcaption>A line chart following recent U.S. GHG emissions over the 7 year span of 3 years before an investment spike, the investment spike, and the following 3 years. </figcaption>
+        </figure>
+
+        <p><b>Design Decisions and Rationale:</b></p>
+
+        <ul>
+          <li><b>Aggregation</b>:
+            The main dataset consisted of a merge between several different dataframes from the IMF Climate Change Indicators database: GHG by nation, and the components which comprise “green investment”: Renewable Energy, Green Bonds, Environmental Taxes, and Low Carbon Trade. The dataset is first sorted by country and year, followed by calculating the year-over-year (YoY) percentage change in green investment. Spike years are identified when the YoY change exceeds 1.5× the previous value. The top 5 investment spikes are selected by investment amount per country. For each of these spikes, a 7-year window (3 years before, the spike year, and 3 years after) of GHG emissions data is extracted. The GHG emissions drop is calculated between the start and end of this window, and the top 4 countries with the largest GHG emission drop are selected for visualization.
+
+           </li>
+          <li><b>Design Choice – Color Encoding</b>:
+            Opacity-based color encoding is applied to distinguish the top 4 spikes. A deep blue color is used for all lines, with varying opacities assigned to each country based on the magnitude of the emission drop. This color was selected because it is one of the primary colors associated with the U.S. which is the theme of this specific visualization. This allows the viewer to easily differentiate between countries without overwhelming the visualization with the incorporation of various different colors. The use of opacity ensures clarity, especially when lines overlap and ensures that color perception is taken into consideration. 
+           </li>
+          <li><b>Design Choice – Marked Lines + Overall Encodings</b>:
+            The use of lines with markers is chosen to highlight the trend of GHG emissions over time (before and after the investment spike). The markers on each data point provide clear reference points for the exact values at each year, making it easier for the viewer to compare changes in GHG emissions before and after the spikes. When rendered via Plotly, users can hover over these points and find the specific GHG emission values for the specific data point.The lines visually communicate the change over time, while the markers make the data more interactive and precise. Overall, encodings that are used in this visualization are position on a common scale, tilt, and color saturation when looking at the various lines themselves. 
+           </li>
+          <li><b>Design Choice – Contextual Vertical Line</b>:
+            A vertical line at t=0 is used to mark the investment spike year. This design choice effectively anchors the timeline, making it clear where the spike occurred and aiding the viewer in understanding the temporal relationship between investment and emissions changes. To understand this visualization the audience must know what year the spike occurred in, and by solidifying this point via the annotation, the audience is able to understand where is the origin of the plot. This visual cue adds temporal clarity, ensuring the focus remains on the comparison of emissions before and after the spike event.
+          </ul>
+      </section>
+
+      <section>
+        <h3>AGAINST the Proposition</h3>
+
+        <figure>
+          <img src="against.png" alt="" />
+          <figcaption>A two-faced visualization with a line and bar visualization detailing emissions and green investment over time and a global view of the correlation between green investment and GHG % change.</figcaption>
+        </figure>
+
+        <p><b>Design Decisions and Rationale:</b></p>
+
+        <ul>
+          <li><b>Aggregation</b>:
+            The main dataset consisted of a merge between several different dataframes from the IMF Climate Change Indicators database: GHG by nation, and the components which comprise “green investment”: Renewable Energy, Green Bonds, Environmental Taxes, and Low Carbon Trade. The dataset was filtered by indicator type to separately extract GHG emissions and green investment data. Total annual values were computed using by grouping by year and and summing the resulting data for the time series visualization. For the bubble map, GHG percent change per country from 2013 onward was calculated using the first and last yearly values, while total investment was summed per country, followed by a merge on country-level data for integrated analysis.
+           </li>
+          <li><b>Design Choice – Dual Axis Encoding</b>:
+            The time series plot uses a dual-axis design, mapping GHG emissions to the left y-axis (line plot) and green investment to the right y-axis (bar chart). This separation preserves scale integrity while allowing simultaneous trend comparison, enhancing visual clarity without misleading viewers about proportionality. The bar chart within the time series plot exhibits the conjunction principle of Integral: having both interference and gain such that a viewer can clearly see investments increasing. 
+           </li>
+          <li><b>Design Choice – Color Usage</b>:
+            Color plays a semantic and perceptual role: red is used for GHG emissions to evoke urgency or danger, and green for investment to represent sustainability. In the choropleth, the reversed  
+           color scale (green for low % increase, red for high) helps viewers intuitively associate red with worse outcomes (more emissions), aligning with common environmental narratives.
+           </li>
+          <li><b>Design Choice – Spatial and Size Encoding</b>:
+            The bubble map uses geo-spatial position and size encoding to display two dimensions: country location and total investment (bubble size). GHG % change is encoded with color. This multi-channel encoding allows viewers to rapidly assess both scale and effectiveness of investment globally, while the annotation for Vietnam adds a narrative anchor to guide interpretation. In the time series plot, we can see an annotation for the Paris Agreement in 2015, giving the audience a reasoning for why investments seem to have skyrocketed following that year. In creating these annotations and visualizations the following magnitude encodings were all taken into consideration: position on a common scale, length, area, color saturation. </li>
+        </ul>
+
+      <section>
+        <h2>Final Reflection</h2>
+
+        <p>[WRITE FINAL REFLECTION PARAGRAPHS HERE.]</p>
+      </section>
+    </main>
+  </body>
+</html>
